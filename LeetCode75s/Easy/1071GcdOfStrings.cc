@@ -32,7 +32,10 @@ str1 and str2 consist of English uppercase letters.
 
 using namespace std;
 
-class Solution {
+/**
+ * Version 1
+*/
+class Solution1 {
 public:
     string gcdOfStrings(string str1, string str2) {
         vector<string> possibleSubstrings {""};
@@ -66,6 +69,48 @@ public:
             }
         }
         return possibleSubstrings[possibleSubstrings.size() - 1];
+    }
+};
+
+
+/**
+ * Version 2: Not using vectors
+*/
+class Solution {
+public:
+    string gcdOfStrings(string str1, string str2) {
+        //vector<string> possibleSubstrings {""};
+        string answer = "";
+        // find all substrings in string 1
+        for (size_t i = 1; i <= str1.size(); ++i) {
+            string possibleSubstring = str1.substr(0,i);
+            // cerr << "error: " << possibleSubstring << endl;
+            if (str1.length() % possibleSubstring.length() == 0 
+            && str2.length() % possibleSubstring.length() == 0) { //effeciency check
+                // cerr << "inside" << endl;
+                string s = possibleSubstring;
+                bool isPossible1 = false;
+                bool isPossible2 = false;
+                // check substring of both
+                while (s.length() <= str1.length() || s.length() <= str2.length()) {
+                    // cerr << "string: " << s << endl;
+                    if (s == str1) {
+                        isPossible1 = true;
+                        // cerr << "possible1" << endl;
+                    }
+                    if (s == str2) {
+                        isPossible2 = true;
+                        // cerr << "possible2" << endl;
+                    }
+                    s += possibleSubstring;
+                }
+
+                if (isPossible1 && isPossible2) {
+                    answer = possibleSubstring;
+                }
+            }
+        }
+        return answer;
     }
 };
 
