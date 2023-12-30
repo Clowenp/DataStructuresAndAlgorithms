@@ -39,3 +39,12 @@ public:
         }
     }
 };
+
+int main () {
+    vector<int> num {0, 1, 2, 3, 0};
+    Solution{}.moveZeroes(num);
+    for (int n : num) {
+        cout << n << " ";
+    }
+    cout << endl;
+}
