@@ -27,6 +27,7 @@ Constraints:
 #include <vector>
 #include <iostream>
 #include <map>
+#include <unordered_map>
 #include <unordered_set>
 
 using namespace std;
@@ -34,10 +35,9 @@ using namespace std;
 class Solution {
 public:
     bool uniqueOccurrences(vector<int>& arr) {
-        map<int, int> m;
+        unordered_map<int, int> m; // much faster
         for (int n : arr) {
-            if (m.count(n)) ++m[n];
-            else m[n] = 1;
+            ++m[n];
         }
         unordered_set<int> set;
         for (auto& p : m) {
