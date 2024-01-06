@@ -1,16 +1,20 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    vector<int> a {1,2,3};
-    for (auto it = a.begin(); it != a.end();) {
-        it = a.emplace(it, 4);
-        it += 2;
-    }
+    string s = "helloasd";
+    istringstream iss {s};
 
-    for (auto n : a) {
-        cout << n << endl;
+    int n = 0;
+    bool found = true;
+    while (!(iss >> n) && !iss.eof()) {
+        iss.clear();
+        iss.ignore();
+        if (iss.eof()) found = false;
     }
+    if (found) cout << n << endl;
+    else cout << "nothing" << endl;
 }
