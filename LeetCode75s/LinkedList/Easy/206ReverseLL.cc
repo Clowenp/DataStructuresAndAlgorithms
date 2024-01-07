@@ -55,18 +55,18 @@ struct ListNode {
     }
 };
 
-class Solution {
+class Solution2 {
 public:
     ListNode* reverseList(ListNode* head) {
         ListNode* tmp = head;
         stack<int> s;
         
-        while (tmp != nullptr) {
+        while (tmp) {
             s.push(tmp->val);
             tmp = tmp->next;
         }
         tmp = head;
-        while (tmp != nullptr) {
+        while (tmp) {
             tmp->val = s.top();
             s.pop();
             tmp = tmp->next;
@@ -75,6 +75,20 @@ public:
     }
 };
 
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* rest = head;
+        ListNode* front = nullptr;
+        while (rest) {
+            rest = rest->next;
+            head->next = front;
+            front = head;
+            head = rest;
+        }
+        return front;
+    }
+};
 
 void printLinkedList(ListNode* l) {
     while (l != nullptr) {
