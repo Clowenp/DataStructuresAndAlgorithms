@@ -108,23 +108,61 @@ public:
 };
 
 class Solution {
+
+    string duplicateString(int k, string s) {
+        string newS;
+        for (int i = 0; i < k; ++i) {
+            newS += s;
+        }
+        return newS;
+    }
+    void printStack (vector<int>& s) {
+        for (int n : s) {
+            cout << n << " ";
+        }
+        cout << endl;
+    }
 public:
     string decodeString(string s) {
         vector<int> stack; // holds k ( number of duplicate of substrings)
         
         string noNumS;
 
-        for (char c : s) {
-            if (c=='1'||c=='2'||c=='3'||c=='4'||c=='5'||c=='6'||c=='7'||c=='8'||c=='9'||c=='0') stack.emplace_back(static_cast<int>(c));
-            else noNumS += c;
+        // remove all the numbers
+        for (size_t i = 0; i < s.size(); ++i) {
+            if (s[i]=='1'||s[i]=='2'||s[i]=='3'||s[i]=='4'||s[i]=='5'||s[i]=='6'||s[i]=='7'||s[i]=='8'||s[i]=='9'||s[i]=='0') {
+                int num = s[i] - '0';
+                ++i;
+                while (s[i]=='1'||s[i]=='2'||s[i]=='3'||s[i]=='4'||s[i]=='5'||s[i]=='6'||s[i]=='7'||s[i]=='8'||s[i]=='9'||s[i]=='0') {
+                    num = 10 * num + (s[i] - '0');
+                    ++i;
+                }
+                stack.emplace_back(num);
+            }
+            noNumS += s[i];
         }
 
-        return s;
+        // printStack(stack);
+        // cout << "noNumS: " << noNumS << endl;
 
+        // start replacing each [string] with k x string
+        int index = noNumS.size() - 1;
+        for (int i = static_cast<int>(stack.size()) - 1; i >= 0; --i) {
+            while (noNumS[index] != '[') {
+                --index;
+            }
+            int endIndex = index;
+            while (noNumS[endIndex] != ']') {
+                ++endIndex;
+            }
+            noNumS = noNumS.substr(0, index) + duplicateString(stack[i], noNumS.substr(index + 1, endIndex - index - 1)) + (static_cast<int>(noNumS.size()) > endIndex + 1 ? noNumS.substr(endIndex + 1) : "");
+        }
+        return noNumS;
     }
 };
 
 int main () {
+    cout << Solution{}.decodeString("100[leetcode]") << endl;
     cout << Solution{}.decodeString("3[a]2[bc]") << endl;
     cout << Solution{}.decodeString("3[a2[c]]") << endl;
     cout << Solution{}.decodeString("2[abc]3[cd]ef") << endl;
