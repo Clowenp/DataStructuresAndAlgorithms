@@ -4,6 +4,7 @@
         "ostream": "cpp",
         "vector": "cpp",
         "*.tcc": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "functional": "cpp"
     }
 }
